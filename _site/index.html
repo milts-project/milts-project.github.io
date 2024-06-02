@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="UTF-8">
+
+        <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Mutual Information-Based Speaker-content Disentanglement in Lip-to-Speech Synthesis | milts-project.github.io</title>
+<meta name="generator" content="Jekyll v3.9.5" />
+<meta property="og:title" content="Mutual Information-Based Speaker-content Disentanglement in Lip-to-Speech Synthesis" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="https://milts-project.github.io/" />
+<meta property="og:description" content="https://milts-project.github.io/" />
+<link rel="canonical" href="http://localhost:4000/" />
+<meta property="og:url" content="http://localhost:4000/" />
+<meta property="og:site_name" content="milts-project.github.io" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Mutual Information-Based Speaker-content Disentanglement in Lip-to-Speech Synthesis" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebSite","description":"https://milts-project.github.io/","headline":"Mutual Information-Based Speaker-content Disentanglement in Lip-to-Speech Synthesis","name":"milts-project.github.io","url":"http://localhost:4000/"}</script>
+<!-- End Jekyll SEO tag -->
+
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link rel="preload" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap" as="style" type="text/css" crossorigin>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#157878">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+        <link rel="stylesheet" href="/assets/css/style.css?v=b16b6df3b3638648e693be7069a509935bb4fc24">
+        <link rel="stylesheet" href="/assets/css/custom_style.css?v=b16b6df3b3638648e693be7069a509935bb4fc24">
+        <!-- start custom head snippets, customize with your own _includes/head-custom.html file -->
+
+<!-- Setup Google Analytics -->
+
+
+
+<!-- You can set your favicon here -->
+<!-- link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" -->
+
+<!-- end custom head snippets -->
+
+    </head>
+    <body>
+        <header class="page-header" role="banner">
+            <h1 class="project-name">
+                Mutual Information-Based Speaker-content <br> Disentanglement in Lip-to-Speech Synthesis
+            </h1>
+            <!--
+                <h2 class="project-tagline">https://milts-project.github.io/</h2>
+            -->
+            <div style="text-align: center;">
+                <p><b>Anonymous Author(s)</b></p>
+                <p><i>Under review at NeurIPS 2024</i></p>
+            </div>
+        </header>
+
+        <main id="content" class="main-content" role="main">
+
+            <center>
+                <p style="text-align: left;">
+Demos are randomly selected from the test set without cherry-picking. 
+For demo purpose, we additionally adopt <a href="https://github.com/gemelo-ai/vocos">Vocos</a> for better audio quality. We use the pretrained checkpoints from the original Vocos repository without any further finetuning on GRID dataset.
+Select vocoder:  
+<select id="vocoder">
+  <option value="vocos">Vocos</option>
+  <option value="griffin-lim">Griffin-Lim</option>
+</select>
+.
+</p>
+
+<h1 id="seen--seen">Seen → seen</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Ground Truth</th>
+      <th>Target Speaker</th>
+      <th>Baseline</th>
+      <th>$I_\mathrm{DANN}$</th>
+      <th>$I_\mathrm{Rate}$</th>
+      <th>$I_\mathrm{vCLUB}$</th>
+      <th>$I_\mathrm{Dec}$</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><video data-src="assets/videos/gt/seen_seen_vc_test/002500/s10/pgwozn.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/rate/0/seen_seen_vc_test/030000/s10/pgwozn.ref.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/rate/0/seen_seen_vc_test/030000/s10/pgwozn.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/dann/1/seen_seen_vc_test/030000/s10/pgwozn.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/rate/1/seen_seen_vc_test/030000/s10/pgwozn.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/club/1/seen_seen_vc_test/030000/s10/pgwozn.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/nce/1/seen_seen_vc_test/030000/s10/pgwozn.mp4"></video></td>
+    </tr>
+    <tr>
+      <td><video data-src="assets/videos/gt/seen_seen_vc_test/002500/s18/pgbj1p.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/rate/0/seen_seen_vc_test/030000/s18/pgbj1p.ref.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/rate/0/seen_seen_vc_test/030000/s18/pgbj1p.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/dann/1/seen_seen_vc_test/030000/s18/pgbj1p.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/rate/1/seen_seen_vc_test/030000/s18/pgbj1p.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/club/1/seen_seen_vc_test/030000/s18/pgbj1p.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/nce/1/seen_seen_vc_test/030000/s18/pgbj1p.mp4"></video></td>
+    </tr>
+    <tr>
+      <td><video data-src="assets/videos/gt/seen_seen_vc_test/002500/s22/sgbn5p.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/rate/0/seen_seen_vc_test/030000/s22/sgbn5p.ref.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/rate/0/seen_seen_vc_test/030000/s22/sgbn5p.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/dann/1/seen_seen_vc_test/030000/s22/sgbn5p.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/rate/1/seen_seen_vc_test/030000/s22/sgbn5p.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/club/1/seen_seen_vc_test/030000/s22/sgbn5p.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/nce/1/seen_seen_vc_test/030000/s22/sgbn5p.mp4"></video></td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 id="seen--unseen">Seen → unseen</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Ground Truth</th>
+      <th>Target Speaker</th>
+      <th>Baseline</th>
+      <th>$I_\mathrm{DANN}$</th>
+      <th>$I_\mathrm{Rate}$</th>
+      <th>$I_\mathrm{vCLUB}$</th>
+      <th>$I_\mathrm{Dec}$</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><video data-src="assets/videos/gt/seen_unseen_vc_test/002500/s12/lwiq2s.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/rate/0/seen_unseen_vc_test/030000/s12/lwiq2s.ref.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/rate/0/seen_unseen_vc_test/030000/s12/lwiq2s.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/dann/1/seen_unseen_vc_test/030000/s12/lwiq2s.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/rate/1/seen_unseen_vc_test/030000/s12/lwiq2s.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/club/1/seen_unseen_vc_test/030000/s12/lwiq2s.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/nce/1/seen_unseen_vc_test/030000/s12/lwiq2s.mp4"></video></td>
+    </tr>
+    <tr>
+      <td><video data-src="assets/videos/gt/seen_unseen_vc_test/002500/s14/lgwz2s.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/rate/0/seen_unseen_vc_test/030000/s14/lgwz2s.ref.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/rate/0/seen_unseen_vc_test/030000/s14/lgwz2s.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/dann/1/seen_unseen_vc_test/030000/s14/lgwz2s.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/rate/1/seen_unseen_vc_test/030000/s14/lgwz2s.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/club/1/seen_unseen_vc_test/030000/s14/lgwz2s.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/nce/1/seen_unseen_vc_test/030000/s14/lgwz2s.mp4"></video></td>
+    </tr>
+    <tr>
+      <td><video data-src="assets/videos/gt/seen_unseen_vc_test/002500/s16/sbbz9n.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/rate/0/seen_unseen_vc_test/030000/s16/sbbz9n.ref.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/rate/0/seen_unseen_vc_test/030000/s16/sbbz9n.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/dann/1/seen_unseen_vc_test/030000/s16/sbbz9n.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/rate/1/seen_unseen_vc_test/030000/s16/sbbz9n.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/club/1/seen_unseen_vc_test/030000/s16/sbbz9n.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/nce/1/seen_unseen_vc_test/030000/s16/sbbz9n.mp4"></video></td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 id="unseen--seen">Unseen → seen</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Ground Truth</th>
+      <th>Target Speaker</th>
+      <th>Baseline</th>
+      <th>$I_\mathrm{DANN}$</th>
+      <th>$I_\mathrm{Rate}$</th>
+      <th>$I_\mathrm{vCLUB}$</th>
+      <th>$I_\mathrm{Dec}$</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><video data-src="assets/videos/gt/unseen_seen_vc_test/002500/s1/swbi4n.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/rate/0/unseen_seen_vc_test/030000/s1/swbi4n.ref.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/rate/0/unseen_seen_vc_test/030000/s1/swbi4n.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/dann/1/unseen_seen_vc_test/030000/s1/swbi4n.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/rate/1/unseen_seen_vc_test/030000/s1/swbi4n.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/club/1/unseen_seen_vc_test/030000/s1/swbi4n.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/nce/1/unseen_seen_vc_test/030000/s1/swbi4n.mp4"></video></td>
+    </tr>
+    <tr>
+      <td><video data-src="assets/videos/gt/unseen_seen_vc_test/002500/s20/sgbn7p.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/rate/0/unseen_seen_vc_test/030000/s20/sgbn7p.ref.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/rate/0/unseen_seen_vc_test/030000/s20/sgbn7p.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/dann/1/unseen_seen_vc_test/030000/s20/sgbn7p.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/rate/1/unseen_seen_vc_test/030000/s20/sgbn7p.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/club/1/unseen_seen_vc_test/030000/s20/sgbn7p.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/nce/1/unseen_seen_vc_test/030000/s20/sgbn7p.mp4"></video></td>
+    </tr>
+    <tr>
+      <td><video data-src="assets/videos/gt/unseen_seen_vc_test/002500/s24/pgai1p.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/rate/0/unseen_seen_vc_test/030000/s24/pgai1p.ref.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/rate/0/unseen_seen_vc_test/030000/s24/pgai1p.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/dann/1/unseen_seen_vc_test/030000/s24/pgai1p.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/rate/1/unseen_seen_vc_test/030000/s24/pgai1p.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/club/1/unseen_seen_vc_test/030000/s24/pgai1p.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/nce/1/unseen_seen_vc_test/030000/s24/pgai1p.mp4"></video></td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 id="unseen--unseen">Unseen → unseen</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Ground Truth</th>
+      <th>Target Speaker</th>
+      <th>Baseline</th>
+      <th>$I_\mathrm{DANN}$</th>
+      <th>$I_\mathrm{Rate}$</th>
+      <th>$I_\mathrm{vCLUB}$</th>
+      <th>$I_\mathrm{Dec}$</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><video data-src="assets/videos/gt/unseen_unseen_vc_test/002500/s1/lriq8p.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/rate/0/unseen_unseen_vc_test/030000/s1/lriq8p.ref.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/rate/0/unseen_unseen_vc_test/030000/s1/lriq8p.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/dann/1/unseen_unseen_vc_test/030000/s1/lriq8p.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/rate/1/unseen_unseen_vc_test/030000/s1/lriq8p.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/club/1/unseen_unseen_vc_test/030000/s1/lriq8p.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/nce/1/unseen_unseen_vc_test/030000/s1/lriq8p.mp4"></video></td>
+    </tr>
+    <tr>
+      <td><video data-src="assets/videos/gt/unseen_unseen_vc_test/002500/s11/lgwl9a.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/rate/0/unseen_unseen_vc_test/030000/s11/lgwl9a.ref.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/rate/0/unseen_unseen_vc_test/030000/s11/lgwl9a.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/dann/1/unseen_unseen_vc_test/030000/s11/lgwl9a.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/rate/1/unseen_unseen_vc_test/030000/s11/lgwl9a.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/club/1/unseen_unseen_vc_test/030000/s11/lgwl9a.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/nce/1/unseen_unseen_vc_test/030000/s11/lgwl9a.mp4"></video></td>
+    </tr>
+    <tr>
+      <td><video data-src="assets/videos/gt/unseen_unseen_vc_test/002500/s27/lwwx3s.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/rate/0/unseen_unseen_vc_test/030000/s27/lwwx3s.ref.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/rate/0/unseen_unseen_vc_test/030000/s27/lwwx3s.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/dann/1/unseen_unseen_vc_test/030000/s27/lwwx3s.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/rate/1/unseen_unseen_vc_test/030000/s27/lwwx3s.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/club/1/unseen_unseen_vc_test/030000/s27/lwwx3s.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/nce/1/unseen_unseen_vc_test/030000/s27/lwwx3s.mp4"></video></td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 id="seen-test">Seen test</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Ground Truth</th>
+      <th>Baseline</th>
+      <th>$I_\mathrm{DANN}$</th>
+      <th>$I_\mathrm{Rate}$</th>
+      <th>$I_\mathrm{vCLUB}$</th>
+      <th>$I_\mathrm{Dec}$</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><video data-src="assets/videos/gt/seen_test/002500/s15/bwal4n.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/rate/0/seen_test/030000/s15/bwal4n.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/dann/1/seen_test/030000/s15/bwal4n.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/rate/1/seen_test/030000/s15/bwal4n.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/club/1/seen_test/030000/s15/bwal4n.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/nce/1/seen_test/030000/s15/bwal4n.mp4"></video></td>
+    </tr>
+    <tr>
+      <td><video data-src="assets/videos/gt/seen_test/002500/s16/sbaz8a.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/rate/0/seen_test/030000/s16/sbaz8a.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/dann/1/seen_test/030000/s16/sbaz8a.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/rate/1/seen_test/030000/s16/sbaz8a.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/club/1/seen_test/030000/s16/sbaz8a.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/nce/1/seen_test/030000/s16/sbaz8a.mp4"></video></td>
+    </tr>
+    <tr>
+      <td><video data-src="assets/videos/gt/seen_test/002500/s23/pwau4p.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/rate/0/seen_test/030000/s23/pwau4p.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/dann/1/seen_test/030000/s23/pwau4p.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/rate/1/seen_test/030000/s23/pwau4p.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/club/1/seen_test/030000/s23/pwau4p.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/nce/1/seen_test/030000/s23/pwau4p.mp4"></video></td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 id="unseen-test">Unseen test</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Ground Truth</th>
+      <th>Baseline</th>
+      <th>$I_\mathrm{DANN}$</th>
+      <th>$I_\mathrm{Rate}$</th>
+      <th>$I_\mathrm{vCLUB}$</th>
+      <th>$I_\mathrm{Dec}$</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><video data-src="assets/videos/gt/unseen_test/002500/s1/swbi4n.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/rate/0/unseen_test/030000/s1/swbi4n.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/dann/1/unseen_test/030000/s1/swbi4n.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/rate/1/unseen_test/030000/s1/swbi4n.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/club/1/unseen_test/030000/s1/swbi4n.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/nce/1/unseen_test/030000/s1/swbi4n.mp4"></video></td>
+    </tr>
+    <tr>
+      <td><video data-src="assets/videos/gt/unseen_test/002500/s11/sbis4p.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/rate/0/unseen_test/030000/s11/sbis4p.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/dann/1/unseen_test/030000/s11/sbis4p.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/rate/1/unseen_test/030000/s11/sbis4p.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/club/1/unseen_test/030000/s11/sbis4p.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/nce/1/unseen_test/030000/s11/sbis4p.mp4"></video></td>
+    </tr>
+    <tr>
+      <td><video data-src="assets/videos/gt/unseen_test/002500/s2/lbix4s.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/rate/0/unseen_test/030000/s2/lbix4s.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/dann/1/unseen_test/030000/s2/lbix4s.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/rate/1/unseen_test/030000/s2/lbix4s.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/club/1/unseen_test/030000/s2/lbix4s.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/nce/1/unseen_test/030000/s2/lbix4s.mp4"></video></td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 id="unseen-test-audio-augmented">Unseen test (Audio augmented)</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Ground Truth</th>
+      <th>Baseline</th>
+      <th>$I_\mathrm{DANN}$ (AA)</th>
+      <th>$I_\mathrm{Rate}$ (AA)</th>
+      <th>$I_\mathrm{vCLUB}$ (AA)</th>
+      <th>$I_\mathrm{Dec}$ (AA)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><video data-src="assets/videos/gt/unseen_test/002500/s1/swbi4n.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/rate/0/unseen_test/030000/s1/swbi4n.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/dann_aa/1/unseen_test/020000/s1/swbi4n.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/rate_aa/1/unseen_test/020000/s1/swbi4n.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/club_aa/1/unseen_test/020000/s1/swbi4n.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/nce_aa/1/unseen_test/020000/s1/swbi4n.mp4"></video></td>
+    </tr>
+    <tr>
+      <td><video data-src="assets/videos/gt/unseen_test/002500/s11/sbis4p.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/rate/0/unseen_test/030000/s11/sbis4p.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/dann_aa/1/unseen_test/020000/s11/sbis4p.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/rate_aa/1/unseen_test/020000/s11/sbis4p.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/club_aa/1/unseen_test/020000/s11/sbis4p.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/nce_aa/1/unseen_test/020000/s11/sbis4p.mp4"></video></td>
+    </tr>
+    <tr>
+      <td><video data-src="assets/videos/gt/unseen_test/002500/s2/lbix4s.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/rate/0/unseen_test/030000/s2/lbix4s.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/dann_aa/1/unseen_test/020000/s2/lbix4s.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/rate_aa/1/unseen_test/020000/s2/lbix4s.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/club_aa/1/unseen_test/020000/s2/lbix4s.mp4"></video></td>
+      <td><video data-src="assets/videos/vocos/nce_aa/1/unseen_test/020000/s2/lbix4s.mp4"></video></td>
+    </tr>
+  </tbody>
+</table>
+
+            </center>
+
+            <!--
+                <footer class="site-footer">
+                
+                <span class="site-footer-owner"><a href="https://github.com/milts-project/milts-project.github.io">milts-project.github.io</a> is maintained by <a href="https://github.com/milts-project">milts-project</a>.</span>
+                
+                <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a>.</span>
+                </footer>
+            -->
+        </main>
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+        </script>
+
+        <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="/assets/js/main.js"></script>
+
+    </body>
+</html>

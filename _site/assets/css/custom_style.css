@@ -1,0 +1,16 @@
+.main-content {
+  max-width: 90%;
+}
+
+.main-content table {
+  display: table;
+}
+
+video {
+  max-width: 150px;
+  height: auto;
+}
+
+td {
+  vertical-align: bottom;
+}
